@@ -84,7 +84,18 @@ class PIDController():
         # self.prev_e_offset the previous error. But note that you
         # should be the one to update them also.
 
-        omega = np.random.uniform(-8.0, 8.0)
+        # error
+        e = y_ref - y_curr
+
+        # integral
+        e_int = self.prev_int_offset + (e * delta_t)
+        self.prev_int_offset = e_int
+
+        #derivatives
+        e_der = (e-self.prev_e_offset)/ delta_t
+        self.prev_e_offset = e
+
+        omega = self.kp * e + self.ki * e_int + self.kd * e_der
         v = v_ref
         return v, omega
 
