@@ -43,8 +43,19 @@ class PIDController():
         # self.prev_e_heading the previous error. But note that you
         # should be the one to update them also.
 
+        # error
+        e = theta_ref - theta_curr
+
+        # integral
+        e_int = self.prev_int_heading + (e * delta_t)
+        self.prev_int_heading = e_int
+
+        #derivatives
+        e_der = (e-self.prev_e_heading)/ delta_t
+        self.prev_e_heading = e
+
         v = v_ref
-        omega = np.random.uniform(-8.0, 8.0)
+        omega = self.kp * e + self.ki * e_int + self.kd * e_der
         return v, omega
 
     def OffsetControl(self,
