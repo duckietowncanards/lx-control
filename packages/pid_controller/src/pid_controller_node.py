@@ -57,7 +57,6 @@ class PIDControllerNode(DTROS):
 
         # select the current activity
         rospy.Subscriber(f"/{self.veh}/activity_name", String, self.cbActivity, queue_size=1)
-
         rospy.Subscriber(f"/{self.veh}/PID_parameters", String, self.cbPIDparam, queue_size=1)
 
         pose_topic = f"/{self.veh}/pose"
