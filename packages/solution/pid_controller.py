@@ -45,6 +45,7 @@ class PIDController():
 
         # error
         e = theta_ref - theta_curr
+        e = np.arctan2(np.sin(e), np.cos(e))
 
         # integral
         e_int = self.prev_int_heading + (e * delta_t)
